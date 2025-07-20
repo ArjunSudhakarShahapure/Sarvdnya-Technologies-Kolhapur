@@ -6,45 +6,140 @@
   <title>MechSupplies Co. | Mechanical Equipment & Accessories</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #1a73e8;
-      --secondary: #fbbc05;
-      --bg: #f5f7fa;
-      --text: #222;
-      --accent: #34a853;
-      --shadow: 0 4px 24px rgba(0,0,0,0.08);
+      --primary: #2a3a4d; /* Steel blue/graphite */
+      --secondary: #b0b6be; /* Silver/metallic */
+      --bg: #f3fafa; /* Lighter steel blue/grey background */
+      --text: #232a33; /* Dark text */
+      --accent: #4fd1c5; /* Teal accent */
+      --shadow: 0 8px 32px rgba(44, 62, 80, 0.10);
+      --form-shadow: 0 12px 40px rgba(44, 62, 80, 0.13);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: 'Roboto', Arial, sans-serif;
+      font-family: 'Product Sans', 'Google Sans', Arial, sans-serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.6;
+      min-height: 100vh;
+      position: relative;
     }
-    header {
-      background: #fff;
-      box-shadow: var(--shadow);
-      padding: 1.5rem 0;
-      position: sticky;
-      top: 0;
-      z-index: 100;
+    /* Subtle geometric SVG background pattern */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 0;
+      background: url('data:image/svg+xml;utf8,<svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="60" height="60" fill="%23f3f7fa"/><path d="M0 60L60 0" stroke="%23e6ecf3" stroke-width="1"/><circle cx="30" cy="30" r="8" stroke="%23e6ecf3" stroke-width="1" fill="none"/></svg>');
+      opacity: 0.18;
+      pointer-events: none;
+    }
+    header, main, section, footer {
+      position: relative;
+      z-index: 1;
     }
     .container {
-      width: 90%;
+      width: 96%;
       max-width: 1200px;
       margin: 0 auto;
+    }
+    /* Hero Section: text left, optional image right */
+    .hero .container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 3rem;
+      min-height: 400px;
+    }
+    .hero-content {
+      flex: 2;
+      text-align: left;
+    }
+    .hero-image {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-image img {
+      max-width: 260px;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      display: block;
+    }
+    /* About Section: image left, text right */
+    .about {
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 3rem;
+    }
+    .about-img {
+      order: 1;
+      flex: 1;
+      text-align: left;
+    }
+    .about-text {
+      order: 2;
+      flex: 2;
+      text-align: left;
+    }
+    /* Products/Features: grid, left-aligned */
+    .products, .features, .testimonials {
+      justify-content: flex-start;
+      text-align: left;
+    }
+    .product-card, .feature, .testimonial {
+      text-align: left;
+      margin-left: 0;
+    }
+    /* Contact: form left-aligned, space on right */
+    #contact .container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 3rem;
+      max-width: 900px;
+      margin: 0 auto;
+      min-height: 500px;
+      padding: 3rem 0;
+    }
+    .contact-title {
+      flex: 1.2;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      text-align: right;
+      padding-right: 2rem;
+      min-width: 200px;
+    }
+    .contact-title h2 {
+      margin-bottom: 0;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1.1;
+    }
+    .contact-form {
+      flex: 2;
+      margin: 0;
+      min-width: 320px;
     }
     nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      min-height: 100px;
     }
     .logo {
-      font-size: 2rem;
+      font-size: 2.5rem;
       font-weight: 700;
-      color: var(--primary);
+      color: var(--accent);
+      /* text-transform: uppercase; */
       letter-spacing: 2px;
     }
     .nav-links {
@@ -54,12 +149,13 @@
     }
     .nav-links a {
       text-decoration: none;
-      color: var(--text);
+      color: var(--primary);
       font-weight: 500;
       transition: color 0.2s;
+      letter-spacing: 1px;
     }
     .nav-links a:hover {
-      color: var(--primary);
+      color: var(--accent);
     }
     .hero {
       display: flex;
@@ -67,23 +163,26 @@
       align-items: center;
       justify-content: center;
       min-height: 60vh;
-      background: linear-gradient(90deg, var(--primary) 60%, var(--secondary) 100%);
-      color: #fff;
+      background: linear-gradient(120deg, #f7fafd 60%, #e6ecf3 100%);
+      color: var(--text);
       text-align: center;
       padding: 4rem 0 2rem 0;
+      border-bottom: 1px solid #e6ecf3;
     }
     .hero h1 {
-      font-size: 3rem;
+      font-size: 2.7rem;
       margin-bottom: 1rem;
       font-weight: 700;
+      letter-spacing: 1px;
     }
     .hero p {
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       margin-bottom: 2rem;
+      color: var(--primary);
     }
     .hero .cta-btn {
-      background: var(--secondary);
-      color: #222;
+      background: var(--accent);
+      color: #fff;
       padding: 1rem 2.5rem;
       border: none;
       border-radius: 30px;
@@ -91,10 +190,11 @@
       font-weight: 700;
       cursor: pointer;
       box-shadow: var(--shadow);
-      transition: background 0.2s;
+      transition: background 0.2s, color 0.2s;
+      letter-spacing: 1px;
     }
     .hero .cta-btn:hover {
-      background: var(--accent);
+      background: var(--primary);
       color: #fff;
     }
     section {
@@ -102,10 +202,12 @@
     }
     .section-title {
       text-align: center;
-      font-size: 2.2rem;
+      font-size: 2rem;
       font-weight: 700;
       margin-bottom: 2rem;
       color: var(--primary);
+      letter-spacing: 1px;
+      text-transform: uppercase;
     }
     .about {
       display: flex;
@@ -126,8 +228,16 @@
     .about-img img {
       width: 90%;
       max-width: 350px;
-      border-radius: 20px;
+      border-radius: 16px;
       box-shadow: var(--shadow);
+      filter: grayscale(0.1) contrast(1.05);
+      border: 2px solid #e6ecf3;
+    }
+    .about-text ul {
+      margin-top: 1rem;
+      color: var(--primary);
+      font-size: 1rem;
+      padding-left: 1.2rem;
     }
     .products {
       display: flex;
@@ -137,7 +247,7 @@
     }
     .product-card {
       background: #fff;
-      border-radius: 16px;
+      border-radius: 14px;
       box-shadow: var(--shadow);
       padding: 2rem 1.5rem;
       flex: 1 1 250px;
@@ -145,14 +255,27 @@
       min-width: 220px;
       text-align: center;
       transition: transform 0.2s, box-shadow 0.2s;
+      border: 1px solid #e6ecf3;
     }
     .product-card:hover {
       transform: translateY(-8px) scale(1.03);
-      box-shadow: 0 8px 32px rgba(26,115,232,0.12);
+      box-shadow: 0 8px 32px rgba(79,209,197,0.10);
+      border-color: var(--accent);
     }
     .product-card img {
-      width: 60px;
+      width: 54px;
       margin-bottom: 1rem;
+      filter: grayscale(0.2) brightness(1.1);
+    }
+    .product-card h3 {
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+      letter-spacing: 1px;
+    }
+    .product-card p {
+      color: var(--secondary);
+      font-size: 0.98rem;
     }
     .features {
       display: flex;
@@ -162,17 +285,24 @@
     }
     .feature {
       background: #fff;
-      border-radius: 16px;
+      border-radius: 14px;
       box-shadow: var(--shadow);
       padding: 2rem 1.5rem;
       flex: 1 1 250px;
       max-width: 320px;
       min-width: 220px;
       text-align: center;
+      border: 1px solid #e6ecf3;
     }
     .feature h3 {
-      color: var(--accent);
+      color: var(--primary);
       margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+      letter-spacing: 1px;
+    }
+    .feature p {
+      color: var(--secondary);
+      font-size: 0.98rem;
     }
     .testimonials {
       display: flex;
@@ -182,7 +312,7 @@
     }
     .testimonial {
       background: #fff;
-      border-radius: 16px;
+      border-radius: 14px;
       box-shadow: var(--shadow);
       padding: 2rem 1.5rem;
       flex: 1 1 250px;
@@ -190,6 +320,8 @@
       min-width: 220px;
       text-align: center;
       font-style: italic;
+      border: 1px solid #e6ecf3;
+      color: var(--secondary);
     }
     .testimonial .author {
       margin-top: 1rem;
@@ -199,30 +331,41 @@
     }
     .contact-form {
       background: #fff;
-      border-radius: 16px;
-      box-shadow: var(--shadow);
-      padding: 2rem 1.5rem;
-      max-width: 500px;
+      border-radius: 18px;
+      box-shadow: var(--form-shadow);
+      padding: 2.5rem 2rem;
+      max-width: 600px;
       margin: 0 auto;
+      border: 1.5px solid #e6ecf3;
     }
     .contact-form label {
       display: block;
       margin-bottom: 0.5rem;
       font-weight: 500;
+      color: var(--primary);
+      letter-spacing: 1px;
     }
     .contact-form input,
     .contact-form textarea {
       width: 100%;
       padding: 0.8rem;
       margin-bottom: 1.2rem;
-      border: 1px solid #ddd;
+      border: 1px solid #e6ecf3;
       border-radius: 8px;
       font-size: 1rem;
       font-family: inherit;
+      background: #f7fafd;
+      color: var(--text);
       resize: none;
+      transition: border 0.2s;
+    }
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      border: 1.5px solid var(--accent);
+      outline: none;
     }
     .contact-form button {
-      background: var(--primary);
+      background: var(--accent);
       color: #fff;
       padding: 0.8rem 2rem;
       border: none;
@@ -230,10 +373,12 @@
       font-size: 1.1rem;
       font-weight: 700;
       cursor: pointer;
-      transition: background 0.2s;
+      transition: background 0.2s, color 0.2s;
+      letter-spacing: 1px;
     }
     .contact-form button:hover {
-      background: var(--accent);
+      background: var(--primary);
+      color: #fff;
     }
     .form-message {
       text-align: center;
@@ -243,11 +388,136 @@
       display: none;
     }
     footer {
-      background: #222;
-      color: #fff;
+      background: #fff;
+      color: var(--primary);
       text-align: center;
       padding: 2rem 0 1rem 0;
       margin-top: 3rem;
+      border-top: 1px solid #e6ecf3;
+    }
+    footer a {
+      color: var(--accent) !important;
+      text-decoration: none;
+      margin: 0 0.5rem;
+      font-weight: 500;
+      letter-spacing: 1px;
+    }
+    /* Catalogue Showcase Styles */
+    #catalogue {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
+    .catalogue-row {
+      display: flex;
+      flex-direction: row;
+      gap: 2rem;
+      overflow-x: auto;
+      padding-bottom: 1rem;
+      scrollbar-width: thin;
+      scrollbar-color: var(--accent) #e6ecf3;
+    }
+    .catalogue-row::-webkit-scrollbar {
+      height: 10px;
+    }
+    .catalogue-row::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 6px;
+    }
+    .catalogue-row::-webkit-scrollbar-track {
+      background: #e6ecf3;
+      border-radius: 6px;
+    }
+    .catalogue-card {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      min-width: 260px;
+      max-width: 260px;
+      flex: 0 0 260px;
+      padding: 1.5rem 1rem;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: 1px solid #e6ecf3;
+      overflow: hidden;
+    }
+    .catalogue-img-wrapper {
+      width: 100%;
+      aspect-ratio: 4/3;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+      background: #e6ecf3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .catalogue-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 0;
+      margin: 0;
+    }
+    .catalogue-card button {
+      margin-top: 1rem;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      padding: 0.5rem 1.2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      align-self: flex-start;
+    }
+    .catalogue-card button:hover {
+      background: var(--primary);
+    }
+    /* Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(36, 48, 60, 0.25);
+      backdrop-filter: blur(4px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.2s;
+    }
+    .modal {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(44,62,80,0.18);
+      max-width: 400px;
+      width: 90vw;
+      padding: 2rem 1.5rem 1.5rem 1.5rem;
+      position: relative;
+      text-align: left;
+      z-index: 10000;
+      animation: modalIn 0.2s;
+    }
+    @keyframes modalIn {
+      from { transform: translateY(40px) scale(0.98); opacity: 0; }
+      to { transform: none; opacity: 1; }
+    }
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--primary);
+      cursor: pointer;
+      font-weight: bold;
     }
     @media (max-width: 900px) {
       .about, .products, .features, .testimonials {
@@ -257,6 +527,48 @@
       .about-img, .about-text {
         text-align: center;
       }
+      .container {
+        max-width: 98vw;
+      }
+      .container, .hero .container, #contact .container, .about {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 1.5rem !important;
+      }
+      .hero-content, .about-text, .about-img, .contact-form {
+        text-align: left !important;
+      }
+      #contact .container {
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 1.5rem;
+        min-height: unset;
+        padding: 1.5rem 0;
+      }
+      .contact-title {
+        justify-content: center;
+        text-align: center;
+        padding-right: 0;
+        margin-bottom: 0.5rem;
+        min-width: unset;
+      }
+      .contact-form {
+        width: 100%;
+        min-width: unset;
+      }
+      .catalogue-row {
+        gap: 1rem;
+      }
+      .catalogue-card {
+        min-width: 200px;
+        max-width: 200px;
+        flex: 0 0 200px;
+        padding: 1rem 0.5rem;
+      }
+      .catalogue-card img {
+        height: 80px;
+      }
     }
   </style>
 </head>
@@ -264,7 +576,8 @@
   <header>
     <div class="container">
       <nav>
-        <div class="logo">Sarvdnya Technology </div>
+        <div class="logo">Sarvdnya Technology
+        </div>
         <ul class="nav-links">
           <li><a href="#about">About</a></li>
           <li><a href="#products">Products</a></li>
@@ -277,16 +590,21 @@
   </header>
   <section class="hero">
     <div class="container">
-      <h1>Supplying Excellence in Mechanical Equipment & Accessories</h1>
-      <p>Your trusted partner for high-quality industrial solutions, machinery, and accessories. Empowering your business with reliability and innovation.</p>
-      <a href="#contact"><button class="cta-btn">Get a Quote</button></a>
+      <div class="hero-content">
+        <h1>Supplying Excellence in Mechanical Equipment & Accessories</h1>
+        <p>Your trusted partner for high-quality industrial solutions, machinery, and accessories. Empowering your business with reliability and innovation.</p>
+        <a href="#contact"><button class="cta-btn">Get a Quote</button></a>
+      </div>
+      <div class="hero-image">
+        <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=400&q=80" alt="Industrial Tech" />
+      </div>
     </div>
   </section>
   <section id="about">
     <div class="container about">
       <div class="about-text">
         <h2 class="section-title">About Us</h2>
-        <p>MechSupplies Co. is a leading supplier of mechanical equipment and accessories, serving industries worldwide. With over 20 years of experience, we deliver top-notch products, expert advice, and exceptional customer service. Our mission is to provide innovative, reliable, and cost-effective solutions tailored to your needs.</p>
+        <p>Sarvdnya Technologies Kolhapur is a leading supplier of mechanical equipment and accessories, serving industries worldwide. With over 20 years of experience, we deliver top-notch products, expert advice, and exceptional customer service. Our mission is to provide innovative, reliable, and cost-effective solutions tailored to your needs.</p>
         <ul>
           <li>Wide range of mechanical equipment</li>
           <li>Custom solutions for unique requirements</li>
@@ -319,9 +637,65 @@
           <p>Reliable tools and accessories for maintenance, repair, and installation tasks.</p>
         </div>
         <div class="product-card">
-          <img src="https://img.icons8.com/ios-filled/100/1a73e8/conveyor-belt.png" alt="Conveyor">
+          <span style="display:block;width:60px;height:60px;margin:0 auto 1rem auto;">
+            <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="12" y="28" width="36" height="8" rx="3" fill="#1a73e8"/>
+              <rect x="20" y="20" width="20" height="8" rx="3" fill="#1a73e8"/>
+              <circle cx="18" cy="44" r="4" fill="#1a73e8"/>
+              <circle cx="42" cy="44" r="4" fill="#1a73e8"/>
+            </svg>
+          </span>
           <h3>Conveyor Systems</h3>
           <p>Customizable conveyor solutions for efficient material handling and logistics.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Catalogue Showcase Section -->
+  <section id="catalogue">
+    <div class="container">
+      <h2 class="section-title">Catalogue Showcase</h2>
+      <div class="catalogue-row">
+        <div class="catalogue-card">
+          <div class="catalogue-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=300&q=80" alt="Catalogue 1">
+          </div>
+          <h3>Catalogue Item 1</h3>
+          <p>High-performance industrial pumps for all applications.</p>
+          <button type="button" class="view-more-btn" data-index="0">View More</button>
+        </div>
+        <div class="catalogue-card">
+          <div class="catalogue-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=300&q=80" alt="Catalogue 2">
+          </div>
+          <h3>Catalogue Item 2</h3>
+          <p>Precision bearings and mechanical accessories.</p>
+          <button type="button" class="view-more-btn" data-index="1">View More</button>
+        </div>
+        <div class="catalogue-card">
+          <div class="catalogue-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=300&q=80" alt="Catalogue 3">
+          </div>
+          <h3>Catalogue Item 3</h3>
+          <p>Heavy-duty motors and drives for industry.</p>
+          <button type="button" class="view-more-btn" data-index="2">View More</button>
+        </div>
+        <div class="catalogue-card">
+          <div class="catalogue-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=300&q=80" alt="Catalogue 4">
+          </div>
+          <h3>Catalogue Item 4</h3>
+          <p>Custom conveyor belts and automation solutions.</p>
+          <button type="button" class="view-more-btn" data-index="3">View More</button>
+        </div>
+        <div class="catalogue-card">
+          <div class="catalogue-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=300&q=80" alt="Catalogue 5">
+          </div>
+          <h3>Catalogue Item 5</h3>
+          <p>Industrial valves and piping systems.</p>
+          <button type="button" class="view-more-btn" data-index="4">View More</button>
         </div>
       </div>
     </div>
@@ -370,8 +744,15 @@
   </section>
   <section id="contact">
     <div class="container">
-      <h2 class="section-title">Contact Us</h2>
-      <form class="contact-form" id="contactForm" autocomplete="off">
+      <div class="contact-title">
+        <h2 class="section-title">Contact Us</h2>
+      </div>
+      <form class="contact-form" id="contactForm" autocomplete="off" method="POST" netlify netlify-honeypot="bot-field" name="contact">
+        <input type="hidden" name="form-name" value="contact">
+        <!-- Honeypot field for spam protection -->
+        <div style="display:none">
+          <label>Don’t fill this out if you're human: <input name="bot-field"></label>
+        </div>
         <label for="name">Name</label>
         <input type="text" id="name" name="name" required>
         <label for="email">Email</label>
@@ -379,13 +760,14 @@
         <label for="message">Message</label>
         <textarea id="message" name="message" rows="4" required></textarea>
         <button type="submit">Send Message</button>
-        <div class="form-message" id="formMessage">Thank you for contacting us! We'll get back to you soon.</div>
       </form>
+      <!-- Netlify Success Message -->
+      <div id="form-success" style="display:none;text-align:center;color:var(--accent);font-weight:600;margin-top:1rem;">Thank you for contacting us! We'll get back to you soon.</div>
     </div>
   </section>
   <footer>
     <div class="container">
-      <p>&copy; 2024 MechSupplies Co. All rights reserved.</p>
+      <p>&copy; 2024 Sarvdnya Technologies Kolhapur. All rights reserved.</p>
       <p>Follow us:
         <a href="#" style="color: var(--secondary); text-decoration: none; margin: 0 0.5rem;">LinkedIn</a> |
         <a href="#" style="color: var(--secondary); text-decoration: none; margin: 0 0.5rem;">Twitter</a>
@@ -403,21 +785,73 @@
         }
       });
     });
-    // Contact form validation and message
-    document.getElementById('contactForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      // Simple validation
-      const name = document.getElementById('name').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const message = document.getElementById('message').value.trim();
-      if (name && email && message) {
-        document.getElementById('formMessage').style.display = 'block';
-        this.reset();
-        setTimeout(() => {
-          document.getElementById('formMessage').style.display = 'none';
-        }, 4000);
+    // Catalogue Modal Logic
+    const catalogueDetails = [
+      {
+        title: 'Catalogue Item 1',
+        img: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=300&q=80',
+        desc: 'High-performance industrial pumps for all applications.',
+        more: 'These pumps are designed for maximum efficiency and durability, suitable for a wide range of industrial uses. Available in multiple sizes and configurations.'
+      },
+      {
+        title: 'Catalogue Item 2',
+        img: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=300&q=80',
+        desc: 'Precision bearings and mechanical accessories.',
+        more: 'Our bearings ensure smooth operation and long life for your machinery. Accessories include seals, housings, and more.'
+      },
+      {
+        title: 'Catalogue Item 3',
+        img: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=300&q=80',
+        desc: 'Heavy-duty motors and drives for industry.',
+        more: 'Motors and drives engineered for reliability and high performance in demanding environments. Custom options available.'
+      },
+      {
+        title: 'Catalogue Item 4',
+        img: 'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=300&q=80',
+        desc: 'Custom conveyor belts and automation solutions.',
+        more: 'We provide conveyor systems tailored to your workflow, with automation features for increased productivity.'
+      },
+      {
+        title: 'Catalogue Item 5',
+        img: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=300&q=80',
+        desc: 'Industrial valves and piping systems.',
+        more: 'Our valves and piping are built to withstand high pressure and corrosive environments, ensuring safe and efficient operation.'
       }
+    ];
+    function showModal(index) {
+      const item = catalogueDetails[index];
+      const modalHtml = `
+        <div class="modal-overlay" id="modalOverlay">
+          <div class="modal">
+            <button class="modal-close" id="modalCloseBtn">&times;</button>
+            <img src="${item.img}" alt="${item.title}" style="width:100%;border-radius:10px;margin-bottom:1rem;object-fit:cover;height:120px;" />
+            <h3 style="color:var(--primary);margin-bottom:0.5rem;">${item.title}</h3>
+            <p style="color:var(--secondary);margin-bottom:1rem;">${item.desc}</p>
+            <div style="color:var(--text);font-size:1rem;">${item.more}</div>
+          </div>
+        </div>
+      `;
+      document.body.insertAdjacentHTML('beforeend', modalHtml);
+      document.getElementById('modalCloseBtn').onclick = closeModal;
+      document.getElementById('modalOverlay').onclick = function(e) {
+        if (e.target === this) closeModal();
+      };
+    }
+    function closeModal() {
+      const overlay = document.getElementById('modalOverlay');
+      if (overlay) overlay.remove();
+    }
+    document.querySelectorAll('.view-more-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const idx = this.getAttribute('data-index');
+        showModal(idx);
+      });
     });
+    // Show Netlify success message if redirected with ?success
+    if (window.location.search.includes('success')) {
+      var msg = document.getElementById('form-success');
+      if (msg) msg.style.display = 'block';
+    }
   </script>
 </body>
 </html>
