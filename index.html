@@ -535,6 +535,96 @@
       cursor: pointer;
       font-weight: bold;
     }
+    .contact-flex {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+      max-width: 1000px;
+      margin: 0 auto;
+      min-height: 540px;
+      padding: 3rem 0;
+      position: relative;
+    }
+    .contact-form-col, .owner-intro {
+      flex: 1 1 0;
+      min-width: 320px;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+    .contact-form {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(44,62,80,0.10);
+      border: 1.5px solid #e6ecf3;
+      padding: 2.5rem 2rem;
+      min-height: 420px;
+    }
+    .contact-form label,
+    .contact-form input,
+    .contact-form textarea,
+    .contact-form button {
+      width: 100%;
+      max-width: 340px;
+    }
+    .owner-intro {
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+    .owner-card {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(44,62,80,0.10);
+      padding: 2.5rem 2rem;
+      text-align: center;
+      border: 1.5px solid #e6ecf3;
+      min-width: 320px;
+      max-width: 400px;
+      min-height: 420px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .owner-photo {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 1.2rem;
+      border: 2.5px solid var(--accent);
+    }
+    /* Vertical divider */
+    .contact-divider {
+      width: 2px;
+      background: linear-gradient(to bottom, #e6ecf3 10%, #b0b6be 90%);
+      height: 80%;
+      min-height: 220px;
+      border-radius: 2px;
+      margin: 0 1.2rem;
+      align-self: center;
+    }
+    @media (max-width: 1200px) {
+      .container {
+        max-width: 98vw;
+      }
+      .hero .container, .about, .products, .features, .testimonials, #contact .container, .catalogue-row {
+        max-width: 98vw;
+      }
+    }
     @media (max-width: 900px) {
       .about, .products, .features, .testimonials {
         flex-direction: column;
@@ -556,7 +646,7 @@
       }
       #contact .container {
         flex-direction: column;
-        align-items: center;
+        align-items: stretch;
         justify-content: flex-start;
         gap: 1.5rem;
         min-height: unset;
@@ -582,7 +672,7 @@
         flex: 0 0 200px;
         padding: 1rem 0.5rem;
       }
-      .catalogue-card img {
+      .catalogue-card img, .catalogue-img-wrapper {
         height: 80px;
       }
       header {
@@ -635,6 +725,68 @@
       }
       footer {
         padding: 1.2rem 0 0.7rem 0;
+        font-size: 0.95rem;
+      }
+      .contact-flex {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1.5rem;
+        min-height: unset;
+        padding: 1.5rem 0;
+      }
+      .contact-form-col, .owner-intro {
+        min-width: unset;
+        max-width: 98vw;
+        width: 100%;
+      }
+      .owner-card, .contact-form {
+        min-width: unset;
+        max-width: 98vw;
+        min-height: 320px;
+        padding: 1.5rem 0.7rem;
+      }
+      .contact-divider {
+        width: 80%;
+        height: 2px;
+        min-height: unset;
+        margin: 1.2rem auto;
+        background: linear-gradient(to right, #e6ecf3 10%, #b0b6be 90%);
+      }
+    }
+    @media (max-width: 600px) {
+      .container, .hero .container, #contact .container, .about, .products, .features, .testimonials, .catalogue-row {
+        max-width: 100vw;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+      }
+      .hero h1, .section-title {
+        font-size: 1.05rem;
+      }
+      .contact-form, .owner-card {
+        padding: 1rem 0.3rem;
+        min-height: 220px;
+      }
+      .owner-photo {
+        width: 60px;
+        height: 60px;
+      }
+      .catalogue-card {
+        min-width: 140px;
+        max-width: 140px;
+        flex: 0 0 140px;
+        padding: 0.5rem 0.2rem;
+      }
+      .catalogue-card img, .catalogue-img-wrapper {
+        height: 50px;
+      }
+      .nav-links {
+        font-size: 0.95rem;
+      }
+      .hero .cta-btn, .contact-form button {
+        font-size: 0.95rem;
+        padding: 0.5rem 1rem;
+      }
+      .about-text ul {
         font-size: 0.95rem;
       }
     }
@@ -814,27 +966,37 @@
     </div>
   </section>
   <section id="contact">
-    <div class="container">
-      <div class="contact-title">
-        <h2 class="section-title">Contact Us</h2>
-      </div>
-      <form class="contact-form" id="contactForm" autocomplete="off" method="POST" netlify netlify-honeypot="bot-field" name="contact">
-        <input type="hidden" name="form-name" value="contact">
-        <!-- Honeypot field for spam protection -->
-        <div style="display:none">
-          <label>Don’t fill this out if you're human: <input name="bot-field"></label>
+    <div class="container contact-flex">
+      <div class="contact-form-col">
+        <div class="contact-title">
+          <h2 class="section-title">Contact Us</h2>
         </div>
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" required>
-        <!-- The email entered here will be sent to arjunshahapure.s@gmail.com via Netlify Forms notification settings -->
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required>
-        <label for="message">Message</label>
-        <textarea id="message" name="message" rows="4" required></textarea>
-        <button type="submit">Send Message</button>
-      </form>
-      <!-- Netlify Success Message -->
-      <div id="form-success" style="display:none;text-align:center;color:var(--accent);font-weight:600;margin-top:1rem;">Thank you for contacting us! We'll get back to you soon.</div>
+        <form class="contact-form" id="contactForm" autocomplete="off" method="POST" netlify netlify-honeypot="bot-field" name="contact">
+          <input type="hidden" name="form-name" value="contact">
+          <!-- Honeypot field for spam protection -->
+          <div style="display:none">
+            <label>Don’t fill this out if you're human: <input name="bot-field"></label>
+          </div>
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required>
+          <!-- The email entered here will be sent to arjunshahapure.s@gmail.com via Netlify Forms notification settings -->
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required>
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="4" required></textarea>
+          <button type="submit">Send Message</button>
+        </form>
+        <div id="form-success" style="display:none;text-align:center;color:var(--accent);font-weight:600;margin-top:1rem;">Thank you for contacting us! We'll get back to you soon.</div>
+      </div>
+      <div class="contact-divider"></div>
+      <div class="owner-intro">
+        <div class="owner-card">
+          <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Owner Photo" class="owner-photo">
+          <h3>Sandip Magdum</h3>
+          <h4>Founder & CEO</h4>
+          <p>With over 07 years of experience in the mechanical equipment industry, Sandip leads Sarvdnya Technologies Kolhapur with a passion for innovation and customer satisfaction.</p>
+        </div>
+      </div>
     </div>
   </section>
   <footer>
