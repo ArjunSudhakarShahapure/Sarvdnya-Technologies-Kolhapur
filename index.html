@@ -723,8 +723,11 @@
   <!-- Catalogue Showcase Section -->
   <section id="catalogue">
     <div class="container">
+      <!-- Edit Catalogue Button (admin only) -->
+      <!-- Highlight: Edit button and password check for catalogue admin mode -->
+      <button id="editCatalogueBtn" style="margin-bottom:1rem;display:block;">Edit Catalogue</button>
       <h2 class="section-title">Catalogue Showcase</h2>
-      <div class="catalogue-row">
+      <div class="catalogue-row" id="catalogueRow">
         <div class="catalogue-card">
           <div class="catalogue-img-wrapper">
             <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=300&q=80" alt="Catalogue 1">
@@ -920,6 +923,64 @@
     if (window.location.search.includes('success')) {
       var msg = document.getElementById('form-success');
       if (msg) msg.style.display = 'block';
+    }
+    // Highlight: Catalogue admin mode logic
+    const editBtn = document.getElementById('editCatalogueBtn');
+    let isAdmin = false;
+    editBtn.addEventListener('click', function() {
+      const pwd = prompt('Enter catalogue admin password:');
+      if (pwd === '12arjun11') {
+        isAdmin = true;
+        enableCatalogueEdit();
+      } else {
+        alert('Incorrect password!');
+      }
+    });
+    function enableCatalogueEdit() {
+      document.querySelectorAll('.catalogue-card').forEach((card, idx) => {
+        // Add edit and delete buttons if not already present
+        if (!card.querySelector('.edit-btn')) {
+          const edit = document.createElement('button');
+          edit.textContent = 'Edit';
+          edit.className = 'edit-btn';
+          edit.style.marginRight = '0.5rem';
+          edit.onclick = function() {
+            const title = prompt('Edit title:', card.querySelector('h3').textContent);
+            if (title !== null) card.querySelector('h3').textContent = title;
+            const desc = prompt('Edit description:', card.querySelector('p').textContent);
+            if (desc !== null) card.querySelector('p').textContent = desc;
+          };
+          const del = document.createElement('button');
+          del.textContent = 'Delete';
+          del.className = 'delete-btn';
+          del.onclick = function() {
+            card.remove();
+          };
+          card.appendChild(edit);
+          card.appendChild(del);
+        }
+      });
+      // Add 'Add New' button if not present
+      if (!document.getElementById('addCatalogueBtn')) {
+        const addBtn = document.createElement('button');
+        addBtn.id = 'addCatalogueBtn';
+        addBtn.textContent = 'Add New Item';
+        addBtn.style.margin = '1rem 0';
+        addBtn.onclick = function() {
+          const title = prompt('New item title:');
+          const desc = prompt('New item description:');
+          const img = prompt('Image URL:');
+          if (title && desc && img) {
+            const row = document.getElementById('catalogueRow');
+            const div = document.createElement('div');
+            div.className = 'catalogue-card';
+            div.innerHTML = `<div class='catalogue-img-wrapper'><img src='${img}' alt='${title}'></div><h3>${title}</h3><p>${desc}</p><button type='button' class='view-more-btn'>View More</button>`;
+            row.appendChild(div);
+            enableCatalogueEdit();
+          }
+        };
+        document.querySelector('#catalogue .container').insertBefore(addBtn, document.getElementById('catalogueRow'));
+      }
     }
   </script>
 </body>
