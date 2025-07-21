@@ -984,6 +984,9 @@
           <input type="email" id="email" name="email" required>
           <label for="message">Message</label>
           <textarea id="message" name="message" rows="4" required></textarea>
+          <!-- Optional file upload field -->
+          <label for="attachment">Attachment (PDF, Image, or Doc) <span style="font-weight:normal;color:#888;">(optional)</span></label>
+          <input type="file" id="attachment" name="attachment" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" style="margin-bottom:1rem;">
           <button type="submit">Send Message</button>
         </form>
         <div id="form-success" style="display:none;text-align:center;color:var(--accent);font-weight:600;margin-top:1rem;">Thank you for contacting us! We'll get back to you soon.</div>
